@@ -1,0 +1,43 @@
+<?php
+// El header aqui es para mantener letras como la ñ y la i acentuada.
+header('Content-Type: application/json; charset+utf-8');
+// Guardar datos en variables.
+$login = $_REQUEST["login"];
+$password = $_REQUEST["password"];
+$nombre = $_REQUEST["nombre"];
+$apellido = $_REQUEST["apellido"];
+$correo = $_REQUEST["correo"];
+$sexo = $_REQUEST["sexo"];
+$lema = $_REQUEST["lema"];
+
+// Creamos objeto PHP con valores del formulario y lo guardamos en variable.
+$objeto = array("login" => "$login", "password" => "$password", "firstname" => $nombre, "lastname" => $apellido, "email" => $correo);
+
+// Convertimos el objeto php en objeto JSON y lo almacenamos en variable.
+$mijson = json_encode($objeto,);
+
+// Enviar peticion con metodo cURL
+
+$curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => "https://japi.theeducationdistrict.com/japi-ted/js/api-user-add",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "POST",
+  CURLOPT_POSTFIELDS =>'{"auth-key": "ea00b8-5cdd17f1250d-c7d484f1f9b86a0d29ec", "language": "es", "api-user-add": {"login": "'.$login.'", "password": "'.$password.'", "firstname": "'.$nombre.'", "lastname": "'.$apellido.'", "email": "'.$correo.'", "gender": "'.$sexo.'", "birthday": "-1", "country": "206", "motto": "'.$lema.'", "welcome-email": "false", "permission-groups": [1,2] } }',
+  CURLOPT_HTTPHEADER => array(
+    "Content-Type: application/json"
+  ),
+));
+
+$response = curl_exec($curl);
+
+curl_close($curl);
+echo $response;
+
+?>

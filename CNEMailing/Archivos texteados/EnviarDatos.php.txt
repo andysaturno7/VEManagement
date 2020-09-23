@@ -1,0 +1,36 @@
+<?php
+// Peticion AJAX 
+$client = new http\Client;
+$request = new http\Client\Request;
+$request->setRequestUrl('https://japi.theeducationdistrict.com/japi-ted/js/api-user-add');
+$request->setRequestMethod('POST');
+$body = new http\Message\Body;
+$body->append('{
+    
+"auth-key": "ea00b8-5cdd17f1250d-c7d484f1f9b86a0d29ec",
+"language": "es",
+"api-user-add": {
+"login": "MariaTEX",
+"password": "Maria2019",
+"firstname": "Maria",
+"lastname": "Valdes",
+"email": "maria@tex.cr",
+"gender": "0",
+"birthday": "-1",
+"country": "206",
+"motto": "Ventas",
+"welcome-email": "false",
+"permission-groups": [1,2]
+
+}
+}');
+$request->setBody($body);
+$request->setOptions(array());
+$request->setHeaders(array(
+  'Content-Type' => 'text/plain'
+));
+$client->enqueue($request)->send();
+$response = $client->getResponse();
+echo $response->getBody();
+
+?>

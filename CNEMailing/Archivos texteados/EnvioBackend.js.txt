@@ -1,0 +1,29 @@
+// Codigo para llamar backend.php
+
+document.getElementById("boton").onclick = traer;
+function traer() {
+
+    // console.log('dentro de la funcion');
+
+    const xhttp = new XMLHttpRequest();
+
+    xhttp.open('POST', 'EnviarCurl.php', true);
+
+    xhttp.send();
+
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+
+            const datos = this.responseText;
+
+            console.log(datos.result);
+
+            let res = document.querySelector('#datos');
+            res.innerHTML = datos;
+
+
+
+        }
+    }
+
+}
